@@ -6,7 +6,7 @@ const htmlExternalRoutes = require("./app/routing/htmlRoutes");
 
 const apiExternalRoutes = require("./app/routing/apiRoutes");
 
-app.use("/api/friends", apiExternalRoutes);
+app.use("/api", apiExternalRoutes);
 app.use("/", htmlExternalRoutes);
 
 app.listen(PORT, function() {

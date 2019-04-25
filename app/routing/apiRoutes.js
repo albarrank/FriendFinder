@@ -1,29 +1,28 @@
-// const path = require("path");
+const data = require("../data/friends");
 
-// const data = require("../data/friends");
-// console.log(data);
+console.log(data);
 
-// var externalApiRoutes = require("express").Router();
+var externalApiRoutes = require("express").Router();
 
-// externalApiRoutes.get("/friends", function(req, res) {
-//     console.log("youve reached here");
-//     res.send(data);
-// });
+externalApiRoutes.get("/friends", function(req, res) {
+    console.log("youve reached here");
+    res.send(data);
+});
 
-// module.exports = externalApiRoutes;
+module.exports = externalApiRoutes;
 
 
-module.exports = (function() {
+// module.exports = (function() {
     
-    'use strict';
+//     'use strict';
     
-    var externalApiRoutes = require("express").Router();
+//     var externalApiRoutes = require("express").Router();
 
-    externalApiRoutes.get("/api/friends", function(req, res) {
-        res.send('youre at api/friends')
-        //res.sendFile(path.join(__dirname , "../public/home.html"));
-    });
+//     externalApiRoutes.get("/friends", function(req, res) {
+//         // res.send('youre at api/friends')
+//         //res.sendFile(path.join(__dirname , "../public/home.html"));
+//     });
 
 
-    return externalApiRoutes;
-})();
+//     return externalApiRoutes;
+// })();
