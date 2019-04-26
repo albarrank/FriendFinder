@@ -1,28 +1,20 @@
 const data = require("../data/friends");
+const express = require("express");
+// var externalApiRoutes = require("express").Router();     or this one
+var externalApiRoutes = express.Router();
+externalApiRoutes = express();
 
-console.log(data);
-
-var externalApiRoutes = require("express").Router();
+externalApiRoutes.use(express.urlencoded({extended: true}));
+externalApiRoutes.use(express.json());
 
 externalApiRoutes.get("/friends", function(req, res) {
-    console.log("youve reached here");
-    res.send(data);
+    return res.json(data);
+});
+
+externalApiRoutes.post("/friends", function(req, res) {
+    console.log(req.body);
+    console.log("api post request is working");
 });
 
 module.exports = externalApiRoutes;
 
-
-// module.exports = (function() {
-    
-//     'use strict';
-    
-//     var externalApiRoutes = require("express").Router();
-
-//     externalApiRoutes.get("/friends", function(req, res) {
-//         // res.send('youre at api/friends')
-//         //res.sendFile(path.join(__dirname , "../public/home.html"));
-//     });
-
-
-//     return externalApiRoutes;
-// })();

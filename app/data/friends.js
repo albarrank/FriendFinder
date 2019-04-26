@@ -1,5 +1,3 @@
-// const express = require("express");
-
 var friends = [
     {
         "name":"Ahmed",
@@ -17,7 +15,7 @@ var friends = [
             1
         ]
     }
-]
+];
 module.exports = friends;
 
 
