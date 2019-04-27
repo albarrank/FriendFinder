@@ -191,33 +191,42 @@
 
   <script>
 
-    $("#submit").on("click", function() {
+    $("#submit").on("click", getNameAndImgURL);
+
+    function getNameAndImgURL(event) {
       event.preventDefault();
       var name = $("#name").val().trim();
       var imgUrl = $("#photo").val().trim();
+      getAnswerValues(name,imgUrl);
+    }
+
+    function getAnswerValues(name, imgUrl) {
       var numArray = [];
 
       for (var i = 1; i < 11; i ++) {
         var numValue = $("#q" + i).val();
-        numArray.push(numValue);
+        numArray.push(Number(numValue));
       }
+      formJSONObject(numArray,name,imgUrl) 
+    }
+
+    function formJSONObject(answers,name,imgUrl) {
       var newFriend = {
         name: name,
         photo: imgUrl,
-        score: numArray
+        scores: answers
       };
-
       console.log(newFriend);
-
-      // line 213 is able to read but for some reason does not send newFriend data
+      
       $.post("/api/friends", newFriend)
       .then(function(data, status) {
-        alert("adding new friends");
 
+        console.log("does anything happen here?");
         console.log(status);
         console.log(data);
+        alert("adding new friends");
       });
-    });
+    }
 
   </script>
 </body>
