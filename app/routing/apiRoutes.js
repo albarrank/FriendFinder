@@ -11,8 +11,6 @@ externalApiRoutes.get("/friends", function(req, res) {
 });
 
 externalApiRoutes.post("/friends", function(req, res) {
-    console.log("hello1");
-    console.log(req.body);
     data.push(req.body);
     
 
@@ -47,6 +45,7 @@ externalApiRoutes.post("/friends", function(req, res) {
             for (var k = 0; k < selectedArray.length; k++) {
 
                 var difference = Math.abs(parseInt(selectedArray[k]) - parseInt(answerArrayScores[k]));
+
                 differenceArrays.push(difference);
                 average += differenceArrays[k];
             }
@@ -57,12 +56,9 @@ externalApiRoutes.post("/friends", function(req, res) {
     }
 
     function findLowestAvg(avgArray) {
-        console.log(avgArray);
 
         var lowestNum = Math.min.apply(Math, avgArray);
         var index = avgArray.indexOf(lowestNum);
-        // console.log(lowestNum);
-        // console.log(index);
 
         selectBestFriendToMatch(index);
     }
@@ -71,11 +67,11 @@ externalApiRoutes.post("/friends", function(req, res) {
         var bestFriendName = data[index].name;
         var bestFriendImg = data[index].photo;
         var bestFriend = {
+
             name: bestFriendName,
             image: bestFriendImg
         }
-        // console.log(bestFriendName);
-        // console.log(bestFriendImg);
+
         res.send(bestFriend);
     }
     
