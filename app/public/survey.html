@@ -155,7 +155,7 @@
     <br>
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
+    <button type="submit" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#results-modal" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i>
      Submit</button>
 
     <hr>
@@ -179,7 +179,7 @@
         </div>
         <div class="modal-body">
           <h2 id="match-name"></h2>
-          <img id="match-img" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg" alt="">
+          <img id="match-img" src="" alt="">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -195,8 +195,10 @@
 
     function getNameAndImgURL(event) {
       event.preventDefault();
+
       var name = $("#name").val().trim();
       var imgUrl = $("#photo").val().trim();
+
       getAnswerValues(name,imgUrl);
     }
 
@@ -205,8 +207,10 @@
 
       for (var i = 1; i < 11; i ++) {
         var numValue = $("#q" + i).val();
+
         numArray.push(Number(numValue));
       }
+
       formJSONObject(numArray,name,imgUrl) 
     }
 
@@ -216,16 +220,30 @@
         photo: imgUrl,
         scores: answers
       };
-      console.log(newFriend);
       
       $.post("/api/friends", newFriend)
       .then(function(data, status) {
-
-        console.log("does anything happen here?");
-        console.log(status);
-        console.log(data);
+        
         alert("adding new friends");
+
+        getMatchNamePlusImg(data);
       });
+    }
+    function getMatchNamePlusImg(data) {
+      var name = data.name;
+      var image = data.image;
+
+      populateDivsWithData(name, image);
+    
+    }
+    function populateDivsWithData(name, image){
+      $("#match-name").html(name);
+      $("#match-img").attr("src", image);
+
+      clearInputValues();
+    }
+    function clearInputValues() {
+
     }
 
   </script>

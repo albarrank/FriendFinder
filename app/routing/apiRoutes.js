@@ -1,6 +1,5 @@
 const data = require("../data/friends");
 const express = require("express");
-// var externalApiRoutes = require("express").Router();     or this one
 var externalApiRoutes = express.Router();
 externalApiRoutes = express();
 
@@ -12,7 +11,10 @@ externalApiRoutes.get("/friends", function(req, res) {
 });
 
 externalApiRoutes.post("/friends", function(req, res) {
+    console.log("hello1");
+    console.log(req.body);
     data.push(req.body);
+    
 
     function makeArrayOfNewFriendScores() {
 
@@ -40,55 +42,46 @@ externalApiRoutes.post("/friends", function(req, res) {
 
             var selectedArray = compareArrayScores[i];
             var differenceArrays =[];
-            var transferArray =[];
             var average = 0;
+
             for (var k = 0; k < selectedArray.length; k++) {
 
                 var difference = Math.abs(parseInt(selectedArray[k]) - parseInt(answerArrayScores[k]));
                 differenceArrays.push(difference);
                 average += differenceArrays[k];
             }
-            transferArray.push(average);
-            AvgdifferenceArrays.push(transferArray);
+
+            AvgdifferenceArrays.push(average);
         }
-        console.log(AvgdifferenceArrays);
+        findLowestAvg(AvgdifferenceArrays);
     }
 
+    function findLowestAvg(avgArray) {
+        console.log(avgArray);
+
+        var lowestNum = Math.min.apply(Math, avgArray);
+        var index = avgArray.indexOf(lowestNum);
+        // console.log(lowestNum);
+        // console.log(index);
+
+        selectBestFriendToMatch(index);
+    }
+    
+    function selectBestFriendToMatch(index) {
+        var bestFriendName = data[index].name;
+        var bestFriendImg = data[index].photo;
+        var bestFriend = {
+            name: bestFriendName,
+            image: bestFriendImg
+        }
+        // console.log(bestFriendName);
+        // console.log(bestFriendImg);
+        res.send(bestFriend);
+    }
+    
     makeArrayOfNewFriendScores();
 
-    // function getNewPersonFinalScore () {
-    //     data.push(req.body);
 
-    //     var newPerson = req.body;
-    //     var numbers = newPerson.scores;
-    //     var finalScore = 0;
-
-    //     for (var i = 0; i < numbers.length; i++) {
-    //         finalScore += parseInt(numbers[i]);
-    //     }
-    //     getScoresFromDataObject(finalScore);
-    // }
-
-    // function getScoresFromDataObject(newPersonFinalScore) {
-    //     var resultsArray = [];
-    //     for (var i = 0; i < data.length -1; i++) {
-    //         var scoreArray = data[i].scores;
-    //         var totalResult = 0;
-
-    //         for (var k = 0; k < scoreArray.length; k++) {
-    //             totalResult += parseInt(scoreArray[k]);
-
-    //         }
-    //         resultsArray.push(totalResult);
-    //     }
-    //     compareScores(resultsArray, newPersonFinalScore)
-    // }
-
-    // function compareScores(resultsArray, newPersonFinalScore) {
-
-    // }
-    
-    // getNewPersonFinalScore();
 });
 
 module.exports = externalApiRoutes;
